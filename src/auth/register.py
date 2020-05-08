@@ -19,7 +19,11 @@ def userRegister():
         password2 = request.form['password2']
 
         if password != password2:
-            flash("Password did not match.")
+            flash("Password did not match.", 'error')
+            return redirect(url_for("register.userRegister"))
+
+        if username == '' or password2 == '':
+            flash("Please fill in the details.", 'error')
             return redirect(url_for("register.userRegister"))
 
         url = "http://localhost:8080/udapi/v1/auth/signup"
