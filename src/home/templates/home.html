@@ -1,14 +1,30 @@
-{% extends 'layout.html' %}
+{% extends 'layoutHome.html' %}
 
 {% block title %} UDAPI {% endblock %}
-{% block auth %} <a class="nav-link my-sm-0" href="/logout" tabindex="-1" aria-disabled="true">{{username}}</a> {% endblock %}
+{% block auth %} 
+<div class="dropdown show">
+    <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      {{username}}
+    </a>
+  
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+      <a class="dropdown-item" href="/logout">Logout</a>
+    </div>
+  </div>
+{% endblock %}
 
 {% block content %}
 
-    {% with messages = get_flashed_messages() %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
-            {% for msg in messages %}
-                <p>{{msg}}</p>
+            {% for category, message in messages %}
+                {% if category == 'info' %}
+                    <div class="alert alert-success" role="alert">{{message}}</div>
+                {% elif category == 'error' %}
+                    <div class="alert alert-danger" role="alert">{{message}}</div>
+                {% elif category == 'warning' %}
+                    <div class="alert alert-warning" role="alert">{{message}}</div>
+                {% endif %}
             {% endfor %}
         {% endif %}
     {% endwith %}
