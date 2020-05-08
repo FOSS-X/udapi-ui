@@ -12,8 +12,11 @@ home = Blueprint("home", __name__, static_folder="static", template_folder="temp
 
 @home.route("/home")
 def homepage():
-    username = session["username"]
-    return render_template("home.html", username=username)
+    try:
+        username = session["username"]
+        return render_template("home.html", username=username)
+    except:
+        return redirect(url_for('index'))
 
 @home.route("/logout")
 def logout():
