@@ -30,7 +30,7 @@ def userLogin():
                 flash("Logged in Successfully!", "info")
                 return redirect(url_for("index"))
         except:
-            flash("Invalid Credentials.", "warning")
+            flash("Invalid login credentials.", "error")
             return render_template("login.html")
 
     else:
